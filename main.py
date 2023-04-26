@@ -37,7 +37,6 @@ login_manager.init_app(app)
 # app.config['SECRET_KEY'] = 'any secret string'
 
 
-
 try:
     conn = psycopg2.connect(host = 'containers-us-west-118.railway.app', dbname = 'railway', user="postgres",
     password = "WqBHil3xK73OBr8HXaM3" , cursor_factory = RealDictCursor)
@@ -47,21 +46,13 @@ except Exception as error:
     print("Connection to datatbase failed")
     print(" Error.  ", error)
 
-#
-# try:
-#     conn = psycopg2.connect(host = 'localhost', dbname = 'flaskmovies', user="postgres",
-#     password = "WqBHil3xK73OBr8HXaM3" , cursor_factory = RealDictCursor)
-#     cursor = conn.cursor()
-#     print("databsde connedcted")
-# except Exception as error:
-#     print("Connection to datatbase failed")
-#     print(" Error.  ", error)
-
 with app.app_context():
     # within this block, current_app points to app.
     print(current_app.name)
 # CORS implemented so that we don't get errors when trying to access the server from a different server location
-app.config['SQLALCHEMY_DATABASE_URI']='PGPASSWORD=WqBHil3xK73OBr8HXaM3 psql -h containers-us-west-118.railway.app -U postgres -p 7674 -d railway'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:WqBHil3xK73OBr8HXaM3@containers-us-west-118.railway.app:7674/railway'
+
+# app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:shanthi007@localhost/flaskmovies'
 # https://github.com/Lumary2/Python/blob/master/Python_HTML_flask/app.py
 db=SQLAlchemy(app)
 # ----------------------------------------- login--------------------------------
