@@ -1,0 +1,40 @@
+{% extends 'userbase.html' %}
+
+{% block title %}dashboard{% endblock %}
+
+{% block content %}
+
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Profile
+                    </div>
+                    <div class="card-body">
+                        <p>Name: {{ user.username }}</p>
+                        <p>Email: {{ user.email }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        Latest Posts
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><a href="#">Post 1</a></li>
+                            <li><a href="#">Post 2</a></li>
+                            <li><a href="#">Post 3</a></li>
+                            <li><a href="#">Post 4</a></li>
+                            <li><a href="#">Post 5</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

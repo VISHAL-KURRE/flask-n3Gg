@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+
+{% endblock %}
+{% block content %}
+
+
+    <div class="container">
+      <h1>Sign Up</h1>
+      <form id="register-form" action="/register" >
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+           <div class="form-group">
+          <label for="username">User name:</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="form-group">
+          <label for="cpassword">Confirm Password:</label>
+          <input type="password" class="form-control" id="cpassword" name="cpassword" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
+    </div>
+
+
+
+
+
+  <div id="output"></div>
+
+  <script>
+    const form = document.getElementById('register-form');
+    const output = document.getElementById('output');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      // get form data and convert to JSON object
+      const formData = new FormData(form);
+      const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
+
+      // make AJAX request to register user
+      fetch('/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: jsonData
+      })
+      .then(response => {
+        if (response.ok) {
+          // redirect to dashboard page
+          window.location.href = '/loginpage';
+        } else {
+          throw new Error('Failed to sign-up');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        output.innerHTML = 'Error sing up in: ' + error.message;
+      });
+  });
+  </script>
+
+{% endblock %}
+
+
+
+

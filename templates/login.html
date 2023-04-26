@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+       <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {% if error %}
+                <div  id ='output' class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+                <div class="card">
+                    <div class="card-header">
+                        Login
+                    </div>
+                    <div class="card-body">
+                        <form id="login-form" method="POST" action="{{ url_for('login') }}">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+  const form = document.getElementById('login-form');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    // get form data and convert to JSON object
+    const formData = new FormData(form);
+    const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
+
+    // make AJAX request to register user
+    fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: jsonData
+    })
+      .then(response => {
+        if (response.ok) {
+          // redirect to dashboard page
+          window.location.href = '/dashboard';
+        } else {
+          throw new Error('Failed to login');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        output.innerHTML = 'Error logging in: ' + error.message;
+      });
+  });
+</script>
+{% endblock %}
